@@ -4,24 +4,233 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A Rey of Sunshine</title>
-<meta name="description" content="Travel, traveling with dogs, and handmade dog printables, 3D prints and embroidery. New site coming soon.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600&display=swap">
+<meta name="description" content="Travel, traveling with dogs, and handmade dog printables, 3D prints and embroidery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <style>
-:root{--bg:#fbfaf6;--ink:#1f2a3c;--muted:#5d6676;--sun:#ffc23d;--sun-soft:#fff1c9}
-@media (prefers-color-scheme:dark){:root{--bg:#141a24;--ink:#eef0f3;--muted:#a3abb8;--sun:#ffc94f;--sun-soft:#3a3220;color-scheme:dark}}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;display:grid;place-items:center;padding:24px;text-align:center}
-.sun{width:120px;height:120px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 14px var(--sun-soft);margin:0 auto 36px}
-h1{font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:clamp(34px,7vw,56px);margin:0 0 12px;letter-spacing:-.02em}
-p{color:var(--muted);font-size:18px;max-width:30em;margin:0 auto;line-height:1.6}
+/* Layout: sunny masthead with Rey's portrait in a sun, three doors with photos, adventures gallery, shop shelf, about */
+:root {
+  --bg: #fbfaf6;
+  --surface: #ffffff;
+  --ink: #1f2a3c;
+  --muted: #5d6676;
+  --line: #e4e2d8;
+  --sun: #ffc23d;
+  --sun-soft: #fff1c9;
+  --sky: #2f5d8a;
+  --leaf: #3f7d5c;
+  --berry: #9b3d78;
+  --display: "Young Serif", Georgia, serif;
+  --body: "Figtree", system-ui, -apple-system, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a24; --surface: #1b2330; --ink: #eef0f3; --muted: #a3abb8; --line: #2c3545;
+    --sun: #ffc94f; --sun-soft: #3a3220; --sky: #8bb6e0; --leaf: #7cc3a0; --berry: #e58cc0; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a24; --surface: #1b2330; --ink: #eef0f3; --muted: #a3abb8; --line: #2c3545;
+  --sun: #ffc94f; --sun-soft: #3a3220; --sky: #8bb6e0; --leaf: #7cc3a0; --berry: #e58cc0; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+a:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+
+header.site { padding-block: 22px; border-bottom: 1px solid var(--line); }
+header.site .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand .dot { width: 34px; height: 34px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 6px var(--sun-soft); flex: none; }
+.brand span { font-family: var(--display); font-size: 24px; letter-spacing: -0.01em; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-weight: 600; font-size: 15px; }
+nav a { text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
+nav a:hover { border-bottom-color: var(--sun); }
+
+.hero { padding-block: 56px 48px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sky); margin: 0 0 14px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 6vw, 60px); line-height: 1.05; margin: 0 0 20px; text-wrap: balance; letter-spacing: -0.02em; }
+h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--sun) 62%); padding-inline: 4px; }
+.lede { font-size: 19px; color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 15px; padding: 12px 20px; border-radius: 999px; border: 2px solid var(--ink); }
+.btn.solid { background: var(--ink); color: var(--bg); }
+
+.sun-frame { position: relative; aspect-ratio: 1; width: 100%; max-width: 400px; justify-self: center; }
+.sun-frame .rays { position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-conic-gradient(var(--sun) 0 6deg, transparent 6deg 18deg);
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 61%, #000 70%, transparent 71%);
+          mask: radial-gradient(circle, transparent 60%, #000 61%, #000 70%, transparent 71%);
+  animation: spin 90s linear infinite; }
+.sun-frame img { position: absolute; inset: 15%; width: 70%; height: 70%; object-fit: cover; object-position: 50% 30%; border-radius: 50%; border: 6px solid var(--sun); }
+.sun-frame .tag { position: absolute; right: 4%; bottom: 10%; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sun-frame .rays { animation: none; } }
+
+section { padding-block: 56px; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; letter-spacing: -0.01em; text-wrap: balance; }
+.section-sub { color: var(--muted); margin: 0 0 28px; max-width: 40em; }
+
+.doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.door { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; }
+.door:hover { border-color: var(--sun); }
+.door .ph { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
+.door .ph.shop { display: grid; place-items: center; background: var(--sun-soft); font-family: var(--display); font-size: 26px; text-align: center; padding: 20px; }
+.door .txt { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.door .tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.door.t .tag { color: var(--sky); } .door.d .tag { color: var(--leaf); } .door.s .tag { color: var(--berry); }
+.door h3 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; }
+.door p { margin: 0; color: var(--muted); font-size: 16px; }
+
+.band { background: var(--surface); border-block: 1px solid var(--line); }
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.gallery figure { margin: 0; }
+.gallery img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 12px; }
+.gallery figure.wide { grid-column: span 2; }
+.gallery figure.wide img { aspect-ratio: 3/2; height: auto; }
+.gallery figcaption { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+.shelf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.item { border-top: 3px solid var(--ink); padding-top: 16px; }
+.item h3 { font-family: var(--display); font-weight: 400; font-size: 22px; margin: 0 0 6px; }
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+.note { margin-top: 28px; display: inline-block; background: var(--sun-soft); border-radius: 10px; padding: 10px 16px; font-size: 15px; }
+
+.about .wrap { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 36px; align-items: center; }
+.about img { width: 100%; max-width: 260px; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; border-radius: 50%; border: 6px solid var(--sun-soft); }
+.about p { max-width: 36em; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .about .wrap { grid-template-columns: minmax(0, 1fr); }
+  .sun-frame { max-width: 300px; }
+  .doors, .shelf { grid-template-columns: minmax(0, 1fr); }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { padding-block: 36px; }
+}
 </style>
+<meta property="og:title" content="A Rey of Sunshine">
+<meta property="og:image" content="https://areyofsunshine.com/images/rey-portrait.jpg">
 </head>
 <body>
-<main>
-<div class="sun" aria-hidden="true"></div>
-<h1>A Rey of Sunshine</h1>
-<p>Travel, traveling with dogs, and handmade dog printables, 3D prints and embroidery. The new site is on its way.</p>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top"><div class="dot" aria-hidden="true"></div><span>A Rey of Sunshine</span></a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#explore">Travel</a></li>
+        <li><a href="#adventures">Rey's adventures</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Travel · Dogs · Handmade</p>
+        <h1>Trips worth taking, <em>with the dog</em> in the back seat.</h1>
+        <p class="lede">Mountain summits, beach sunsets and fall trails with Rey, plus honest notes on where dogs are actually welcome and the things I make between trips.</p>
+        <div class="btns">
+          <a class="btn solid" href="#adventures">See Rey's adventures</a>
+          <a class="btn" href="#shop">Visit the shop</a>
+        </div>
+      </div>
+      <div class="sun-frame">
+        <div class="rays" aria-hidden="true"></div>
+        <img src="images/rey-portrait.jpg" alt="Rey, a tan and white dog with one blue eye, lying in the grass and smiling">
+        <span class="tag">This is Rey ☀</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="explore" aria-labelledby="doors-h">
+    <div class="wrap">
+      <h2 id="doors-h">Pick a direction</h2>
+      <p class="section-sub">Three things live here. Start wherever you like.</p>
+      <div class="doors">
+        <a class="door t" href="#adventures">
+          <img class="ph" src="images/rey-summit.jpg" alt="Rey resting on a grassy mountaintop with valleys and clouds behind her">
+          <div class="txt">
+            <span class="tag">Travel</span>
+            <h3>Trips &amp; itineraries</h3>
+            <p>Where we went, what was worth it, and what I'd skip next time.</p>
+          </div>
+        </a>
+        <a class="door d" href="#adventures">
+          <img class="ph" src="images/rey-trail-bench.jpg" alt="Rey in a pink harness with her front paws up on a wooden bench in the woods">
+          <div class="txt">
+            <span class="tag">Dog travel</span>
+            <h3>Traveling with dogs</h3>
+            <p>Dog-friendly stays, trails, beaches and patios, plus packing lists and road-trip tips.</p>
+          </div>
+        </a>
+        <a class="door s" href="#shop">
+          <div class="ph shop">Printables · 3D prints · Embroidery</div>
+          <div class="txt">
+            <span class="tag">Shop</span>
+            <h3>Things I make</h3>
+            <p>Dog printables, 3D-printed pieces and embroidery, sold through Etsy.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="adventures" aria-labelledby="adv-h">
+    <div class="wrap">
+      <h2 id="adv-h">Rey's adventures</h2>
+      <p class="section-sub">A few favorite moments from the road. Trip write-ups are on the way.</p>
+      <div class="gallery">
+        <figure class="wide"><img src="images/rey-river-view.jpg" alt="Rey standing with her paws on a bench, looking out over a river in fall color"><figcaption>Fall color by the river</figcaption></figure>
+        <figure><img src="images/rey-beach-sunset.jpg" alt="Rey lying on beach towels watching the sun set over the water"><figcaption>Sunset on the beach</figcaption></figure>
+        <figure><img src="images/rey-beach-run.jpg" alt="Rey trotting across wet sand by the water, tongue out"><figcaption>Beach zoomies</figcaption></figure>
+        <figure><img src="images/rey-patio.jpg" alt="Rey sitting on a dog-friendly patio, smiling with her tongue out"><figcaption>Patio regular</figcaption></figure>
+        <figure><img src="images/rey-nap-walk.jpg" alt="Rey lying in the grass mid-walk with her eyes closed"><figcaption>Mid-walk nap break</figcaption></figure>
+        <figure class="wide"><img src="images/rey-summit.jpg" alt="Rey resting on a grassy mountaintop"><figcaption>Summit day</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop" aria-labelledby="shop-h">
+    <div class="wrap">
+      <h2 id="shop-h">The shop</h2>
+      <p class="section-sub">Everything is listed on Etsy, so checkout, payment and shipping happen there.</p>
+      <div class="shelf">
+        <div class="item"><h3>Dog printables</h3><p>Instant downloads for dog people: planners, trackers and travel checklists.</p></div>
+        <div class="item"><h3>3D printing</h3><p>Small printed pieces, made to order.</p></div>
+        <div class="item"><h3>Embroidery</h3><p>Hand-finished embroidery pieces and gifts.</p></div>
+      </div>
+      <p class="note">Shop link coming soon.</p>
+    </div>
+  </section>
+
+  <section class="band about" id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <img src="images/rey-dog-bed.jpg" alt="Rey sitting on her dog bed with a big grin">
+      <div>
+        <h2 id="about-h">Hi, I'm Melissa</h2>
+        <p>And this is Rey, my co-pilot and the sunshine this site is named for. We like mountain views, beach sunsets, fall hikes and any patio that lets dogs in.</p>
+        <p>When we're home, I'm making things: printables for dog people, 3D-printed pieces and embroidery.</p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 A Rey of Sunshine</span>
+    <span>areyofsunshine.com</span>
+  </div>
+</footer>
 </body>
 </html>
